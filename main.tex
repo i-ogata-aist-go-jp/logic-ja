@@ -1,0 +1,615 @@
+\documentclass[dvipdfmx,autodetect-engine]{jsarticle}
+\bibliographystyle{plain} 
+
+\title{ lattice を定義する２つの方法：　axiomatic identities で定義された lattice と、 join/meet を持つ partially ordered set として定義された ordered lattice が同等であること}
+\author{i.ogata@aist.go.jp }
+
+\bibliographystyle{plain} 
+\input{packages}
+\input{preamble}
+\input{preambleLogic}
+
+\begin{document}
+
+\maketitle
+
+\def\fCenter{\leq}
+\section{Order Theory}
+
+\subsection{partial order}
+
+\begin{definition}[partial order]
+Let $A$ be a set. A {\em partial order} on $A$ is a binary relation $\leq$ which is
+\begin{enumerate}
+\item {\em reflexive}: for all $a \in A$,  $a \leq a$,
+\item {\em transitive}:  if $a \leq b$ and $b \leq c$, then $a \leq c$, and
+\item {\em antisymmetric}: if $a \leq b$ and $b \leq a$, then $a = b$.
+\end{enumerate}
+\end{definition}
+
+ここから order theory の証明を証明図（ axiom を leaf とする　inference rules  の tree ）の形で記述する。 partial order の axiom と inference rules は、上記の partial order の定義から、以下の１つの axiom と、２つの inference rules となる。
+
+The reflexive rule is an axiom, while the transitive and the antisymmetrc rules are inference rules. In this article, these axioms and inference rules are represented as; 
+\newcommand{\LTCposetRules}{
+\begin{center}
+\begin{prooftree}
+	\AxiomC{} 
+    \RightLabel{ref}
+    \UnaryInfC{$a \leq a$}
+\DisplayProof  \hskip 2cm
+	\AxiomC{$a \leq b$} 
+    \AxiomC{$b \leq c$}
+    \RightLabel{trans}
+    \BinaryInfC{$a \leq c$}
+\DisplayProof  \hskip 2cm
+	\AxiomC{$a \leq b$} 
+    \AxiomC{$b \leq a$}
+    \RightLabel{antisymm}
+    \BinaryInfC{$a = b$}
+\end{prooftree}
+\end{center}
+}
+
+\LTCposetRules
+
+\subsection{join}
+
+\begin{definition}[join]
+Let $(A,\leq)$ be a poset, $S$ a subset of $A$. 
+We say an element $a \in A$ is a {\em join} 
+(or least upper bound) for $S$,
+and write $a = \bigvee S$, if
+\begin{enumerate}
+\item {\em upper bound}:
+$\bigvee S$ is an upper bound for $S$,
+i.e. $s \leq \bigvee S \hskip 6pt\text{for all}\hskip 4pt s \in S$, and
+\item {\em the least upper bound}: 
+if $b$ satisfies $\forall s \in S (s \leq b)$, then $\bigvee S \leq b$. 
+\end{enumerate}
+\end{definition}
+
+The antisymmetry axiom ensures that the join of $S$, if it exists, is unique. 
+If $S$ is a two-element set $\set{s,t}$, we write $s \vee t$ for $\bigvee\set{s,t}$. 
+If $S$ is the empty set $\emptyset$, we write $\bot$ for $\bigvee\emptyset$. 
+$\bot$ is just the least element of $A$,
+because every $c \in A$ is an upper bound for $\emptyset$, i.e. $\bot \leq c$. 
+
+\begin{definition}[bounded join-semilattice-ordered poset]
+A bounded join-semilattice-ordered poset is a poset $(L,\leq)$ such that;
+\begin{enumerate}
+\item  each two-element subset $\set{a,b}$ has a join $a \vee b$, and
+\item  the empty set $\emptyset$  has a join, and write $\bot = \bigvee\emptyset$.
+\end{enumerate}
+\end{definition}
+
+Dually, in any poset we can consider the notion of {\em meet} (greater lower bound)
+and meet-semilattice-ordered poset. 
+We write $\bigwedge S, a \wedge b, \top = \bigwedge\emptyset$ 
+for the analogues of $\bigvee S, a \vee b, \bot$. 
+Specifically, $\top$ is the greatest element of $A$,
+i.e., $c \leq \LTCtop$ for every $c \in A$. 
+
+つまり join と meet の両方を持つ partially ordered set として定義された ordered lattice は、以下の6つの axioms と、2つの inference rules を持つ。
+
+\newcommand{\LTCjoinRules}{
+\begin{center}
+\begin{prooftree}
+\AxiomC{$$} 
+  \RightLabel{$\LTCbot$}
+\UnaryInfC{$ \LTCbot \fCenter a $}
+	\DisplayProof \hskip16pt
+\AxiomC{$$} 
+\RightLabel{$R1\LTCjoin$}
+\UnaryInfC{$ a \fCenter a \LTCjoin b $}
+	\DisplayProof \hskip16pt
+\AxiomC{$$} 
+\RightLabel{$R2\LTCjoin$}
+\UnaryInfC{$ b \fCenter a \vee b $}
+	\DisplayProof \hskip 32pt
+\AxiomC{$a \fCenter c   $} 
+\AxiomC{$b \fCenter c   $} 
+\RightLabel{$L\LTCjoin$}
+\BinaryInfC{$a \LTCjoin b \fCenter c$}
+\end{prooftree}
+\end{center} 
+}
+
+\newcommand{\LTCmeetRules}{
+\begin{center}
+\begin{prooftree}
+\AxiomC{$$} 
+\RightLabel{$\LTCtop$}
+\UnaryInfC{$ a \fCenter \LTCtop $}
+	\DisplayProof \hskip16pt
+\AxiomC{$$} 
+\RightLabel{$L1\LTCmeet$}
+\UnaryInfC{$ a \LTCmeet b  \fCenter a$}
+     \DisplayProof \hskip 16pt
+\AxiomC{$$} 
+\RightLabel{$L2\LTCmeet$}
+\UnaryInfC{$ a \LTCmeet b \fCenter b$}
+     \DisplayProof \hskip 32pt
+\AxiomC{$c \fCenter  a $} 
+\AxiomC{$c \fCenter  b $} 
+\RightLabel{$R\LTCmeet$}
+\BinaryInfC{$c \fCenter a \LTCmeet b$}     
+\end{prooftree}
+\end{center}
+}
+
+\LTCjoinRules
+\LTCmeetRules
+
+\subsection{Commutative Monoids}
+% magma
+\begin{definition} [magma]
+A magma is a basic kind of algebraic structure. It consists of a set $M$ accompanied with a binary operation "$\cdotbin$" which is a map: 
+$ {\QTargument} { \cdotbin} {\QTargument} : M \times M \longrightarrow M$.  That is, it sends any two elements $a,b \in M$ to another element $a \cdotbin b$ .
+%
+In set theoretic notation:
+\[ \forall a,b \in M    ,      a \cdot b \in M \]
+\end{definition}
+
+In this article, we only handle commutative binary operation; 
+i.e., $ a \cdot b = b \cdot a$. 
+
+\begin{definition}[commutative monoid]
+A commutative {\it monoid} is a triple 
+$(M,\cdotbin,\RLone) $  where $\RLone \in M$. 
+The following conditions hold:
+%
+\begin{enumerate} 
+\item {\em neutrality law}:  for all  $a \in M$  we have $\RLone \cdotbin a = a$,
+\item {\em associative law}:  for every $a,b,c \in M$,
+we have $a \cdotbin ( b \cdotbin c) =  (a \cdotbin b) \cdotbin c$,
+\item {\em commutative law}:  for every $a,b \in M$ we have $a \cdotbin b = b \cdotbin a$.
+\end{enumerate}
+\end{definition} 
+
+\def\fCenter{\leq_\LTCjoin}
+\subsection{SemiLattices}
+%
+A semilattices is a commutative monoid in which every element is idempotent. 
+%
+\begin{definition}[semilattice]
+A {\it semilattice} is a triple $(M,\cdotbin,\RLone) $.
+The following conditions hold:
+%
+\begin{enumerate} 
+\item {\em commutative monoid}:  $(M,\cdotbin,\RLone)$ is a commutative monoid,
+\item {\em idempotent law}:  for every $a \in M$  we have $a \cdotbin a = a$.
+\end{enumerate}
+\end{definition}
+
+\begin{proposition}
+A bounded join-semilattice-ordered poset is a semilattice.
+\end{proposition}
+\begin{proof}
+Let $(L,\leq_\LTCjoin)$ be a join-semilattice-ordered poset.
+\begin{enumerate}
+\item The neutrality law holds because $\bot$ is the least element of $L$. 
+\item It is obvious that the associative, commutative and idempotent law hold.
+\end{enumerate}
+\end{proof}
+%
+Similarly, a bounded meet-semilattice-ordered poset is also a semilattice.
+The converse also holds; we can induce a partial order on a semilattice.
+%
+\begin{theorem} [A semilattice and its induced partial order]
+\label{basicTheorem}
+Let $(L,\LTCjoin,\bot)$  be a semillatice. 
+Then there exists a unique partial order on $L$
+such that $a \LTCjoin b$ is the join of $\set{a,b}$, and
+$\bot$ is the least element of $L$. 
+\end{theorem}
+%
+\begin{proof}
+Clearly, if such a partial order exists, 
+we must have $a \leq_\LTCjoin b$ iff $a \LTCjoin b = b$. 
+So we take this as a definition of $\leq_\LTCjoin$. 
+
+\begin{enumerate}
+\item {\em $\leq_\LTCjoin$ is a partial order on $L$}:
+\begin{description}
+\item [reflexiveness] 
+we deduce $a \leq_\LTCjoin a$ from idempotency: $a \LTCjoin a = a$.
+\item [antisymmetry]  $a = a \LTCjoin b = b$. 
+\item [transitivity]  
+Suppose $a \leq_\LTCjoin b$ and $b \leq_\LTCjoin c$;
+i.e. $a \vee b = b$ and $b \vee c = c$. 
+Then we have $a \leq_\LTCjoin c$ as follows: 
+\[ a \vee c = a \vee (b \vee c) = (a \vee b) \vee c = b \vee c = c \mbox{.}\]
+\end{description}
+%
+The above proof is pictorially represented as; 
+\begin{prooftree}
+	\AxiomC{$a \vee a = a$} 
+    \UnaryInfC{$a \leq_\LTCjoin a$}
+\DisplayProof \hskip 48pt
+	\AxiomC{$a \leq_\LTCjoin b$} \UnaryInfC{$a \vee b = b$}
+    \AxiomC{$b \leq_\LTCjoin a$} \UnaryInfC{$b \vee a = a$}
+    \BinaryInfC{$a = b$}
+\DisplayProof \hskip 48pt
+	\AxiomC{$a \leq_\LTCjoin b$} \UnaryInfC{$a \vee b = b$}
+    \AxiomC{$b \leq_\LTCjoin c$} \UnaryInfC{$b \vee c = c$}
+    \BinaryInfC{$(a \vee b) \vee c = c$}
+    \UnaryInfC{$a \vee (b \vee c) = c$}
+    \UnaryInfC{$a \vee c = c$}
+    \UnaryInfC{$a \leq_\LTCjoin c$}
+\end{prooftree}
+
+%
+\item {\em $a \vee b$ is the join of $\set{a,b}$}:
+\begin{enumerate}
+\item $a \vee b$ is an upper bound for both $a$ and $b$
+\begin{prooftree}
+\AxiomC{$a \LTCjoin  b = a \LTCjoin  b$}
+\UnaryInfC{$(a \LTCjoin a) \LTCjoin  b = a \LTCjoin  b$}
+\UnaryInfC{$a \LTCjoin (a \LTCjoin  b) = a \LTCjoin  b$}
+\UnaryInfC{$a \fCenter a \LTCjoin  b$}
+	\DisplayProof \hskip 96pt
+\AxiomC{$a \LTCjoin  b = a \LTCjoin  b$}
+\UnaryInfC{$ a \LTCjoin  b = a \LTCjoin  (b \LTCjoin b)$}
+\UnaryInfC{$a \LTCjoin  b = (a \LTCjoin b) \LTCjoin b$}
+\UnaryInfC{$b \fCenter a \LTCjoin  b$}
+\end{prooftree}
+%
+\item $a \LTCjoin b$ is the least upper bound for $\set{a,b}$
+%
+\begin{prooftree}
+\AxiomC{$a \fCenter c$}
+\UnaryInfC{$a \LTCjoin c = c$}
+\AxiomC{$b \fCenter c$}
+\UnaryInfC{$b \LTCjoin c = c$}
+\BinaryInfC{$ a \LTCjoin (b \LTCjoin c) = c$}
+\UnaryInfC{$ (a \LTCjoin b) \LTCjoin c = c$}
+\UnaryInfC{$ a \LTCjoin b \fCenter c$}
+\end{prooftree}
+%
+\item {\em $\bot$ is the least element}:
+\begin{prooftree}
+\AxiomC{$a \LTCjoin \LTCbot = a$}
+\UnaryInfC{$ \LTCbot \fCenter a$}
+\end{prooftree}
+\end{enumerate}
+\end{enumerate}
+\end{proof}
+
+The theorem says 
+that the two definitions of a semilattice are equivalent. 
+One may freely use both style in constructing proofs.
+
+\begin{definition} [lattice]
+A {\em lattice} is a quintuple $(L,\LTCjoin,\LTCbot,\LTCmeet,\LTCtop)$.
+The following conditions hold.
+\begin{enumerate}
+\item {\em join-semilattice}: $(L,\LTCjoin,\LTCbot)$ is a join-semilattice,
+where $a \leq_\LTCjoin b$ iff $b = a \LTCjoin b$. 
+\item {\em meet-semilattice}: $(L,\LTCmeet,\LTCtop)$ is a meet-semilattice,
+where $a \leq_\LTCmeet b$ iff $a \LTCmeet b = a$. 
+\item {\em absorptive law}:  
+for every $a,b \in L$ 
+we have $a = a \LTCmeet (a \LTCjoin b) $
+and   $(a \LTCmeet b) \LTCjoin b = b$.
+\end{enumerate}
+\end{definition}
+
+\def\fCenter{\leq}
+
+\begin{fact}
+The two partial orders on $L$ ($\leq_\LTCjoin$,$\leq_\LTCmeet$) agree.
+\end{fact}
+\begin{proof}
+\begin{prooftree}
+\AxiomC{$a = a \LTCmeet (a \LTCjoin b) $}
+\AxiomC{$a \leq_\LTCjoin b$}
+\UnaryInfC{$b = a \LTCjoin b $}
+\BinaryInfC{$a = a \LTCmeet b $}
+\UnaryInfC{$a \leq_\LTCmeet b$}
+	\DisplayProof \hskip 24pt
+\AxiomC{$a \leq_\LTCmeet b$}
+\UnaryInfC{$a \LTCmeet b = a $}
+\AxiomC{$(a \LTCmeet b) \LTCjoin b = b $}
+\BinaryInfC{$a \LTCjoin b = b $}
+\UnaryInfC{$a \leq_\LTCjoin b$}
+\end{prooftree}
+\end{proof}
+%%%
+The absorptive laws distinguish a lattice from an arbitrary pair of semilattices. It assure that the partial orders on $L$ induced by the two semilattices are opposite to each other.
+%%%
+
+\begin{table}[t]
+\LTCposetRules
+\LTCjoinRules
+\LTCmeetRules
+\caption{axioms and inference rules for lattice}
+\label{LTCsystem}
+\noindent\makebox[\linewidth]{\rule{\textwidth}{0.4pt}}
+\end{table}
+
+
+
+
+
+\begin{table}[t]
+\[
+\begin{array}{ccc}
+
+\begin{array}{c}
+a \LTCjoin a = a \\
+a \LTCjoin b = b \LTCjoin a \\
+a \LTCjoin (b \LTCjoin c) = (a \LTCjoin b) \LTCjoin c \\
+a \LTCjoin \LTCbot = a 
+\end{array}
+&
+\begin{array}{c}
+a \LTCmeet a = a \\
+a \LTCmeet b = b \LTCmeet a \\
+a \LTCmeet (b \LTCmeet c) = (a \LTCmeet b) \LTCmeet c \\
+a \LTCmeet \LTCtop = a 
+\end{array}
+&
+\begin{array}{c}
+a = a \LTCmeet (a \LTCjoin b) \\
+(a \LTCmeet b) \LTCjoin b = b
+\end{array}
+\end{array}
+\]
+\caption{axiomatic identities for lattices}
+\label{LTCaxiomSystem}
+\noindent\makebox[\linewidth]{\rule{\textwidth}{0.4pt}}
+\end{table}
+
+\def\fCenter{\leq}
+
+\section{distibutive lattice}
+%
+% distributive lattice
+%
+Since lattices come with two binary operations, 
+it is natural to ask whether one of them distributes over the other, 
+i.e. whether one or the other of the following dual laws holds 
+for every three elements $a, b, c$ of $L$:
+
+\begin{enumerate}
+\item {\em Distributivity of $\LTCjoin$ over $\LTCmeet$}:
+$ c \LTCjoin (a \LTCmeet  b) = (c \LTCjoin a) \LTCmeet   (c \LTCjoin b)$
+\item {\em Distributivity of $\LTCmeet$   over $\LTCjoin$}:
+$c \LTCmeet  (a\LTCjoin b) = (c\LTCmeet  a) \LTCjoin  (c\LTCmeet  b)$
+\end{enumerate}
+
+\begin{definition}[distributive lattice]\label{distributiveLattice}
+A lattice $(L,\LTCjoin,\LTCmeet,\LTCbot,\LTCtop)$ is a distributive lattice 
+if it satisfies the avobe two {\em distributive laws}.
+\end{definition}
+
+The following definition and lemma shows that one is enough 
+to define distributivity; the other (its dual) is automatically holds. 
+
+\begin{lemma}[dual of distributive law holds]
+If the distributive law holds in a lattice,  then so does its dual.
+\end{lemma}
+\begin{proof}
+\begin{eqnarray*}
+   (c \LTCjoin a) \LTCmeet (c \LTCjoin b)
+= (c \LTCmeet c) \LTCjoin (c \LTCmeet b) \LTCjoin  (a \LTCmeet c) \LTCjoin (a \LTCmeet b) 
+&=&  c \LTCjoin (a \LTCmeet b)  \\
+   (c \LTCmeet a) \LTCjoin (c \LTCmeet b)
+=  (c \LTCjoin c) \LTCmeet (c \LTCjoin b) \LTCmeet  (a \LTCjoin c) \LTCmeet (a \LTCjoin b) 
+&=&  c \LTCmeet (a \LTCjoin b)
+\end{eqnarray*}
+\end{proof}
+
+\subsection{Boolean Algebras} 
+
+\begin{definition}[boolean algebra]
+A {\em  Boolean algebra} is a sextuple 
+$(L,\LTCjoin,\LTCbot,\LTCmeet,\LTCtop,\lnegP{\mbox{\textendash}})$.
+The following conditions hold:
+\begin{enumerate}
+\item {\em distributive lattice}: 
+$(L,\LTCjoin,\LTCbot,\LTCmeet,\LTCtop)$ is a distributive lattice,
+\item  {\em complement law}: for each element $a$, 
+there exists at most one  $\lneg{a}$  satisfying  
+$a \LTCjoin \lneg{a} = \LTCtop$ and $a \LTCmeet \lneg{a} = \LTCbot$.  
+\end{enumerate}
+\end{definition}
+
+\section{Heyting  Algebras}
+
+\begin{definition}[heyting algebra]
+A {\em  Heyting algebra} is a sextuple 
+$(L,\LTCjoin,\LTCbot,\LTCmeet,\LTCtop,\RLimp)$.
+The following conditions hold:
+\begin{enumerate}
+\item {\em lattice}: 
+$(L,\LTCjoin,\LTCbot,\LTCmeet,\LTCtop)$ is a lattice,
+\item  {\em residual law}: for each pair of elements $(a,b)$, 
+there exists an element $a \LTCimp b$  such that  
+$c \fCenter a \LTCimp b$ iff $a \LTCmeet c \fCenter b$.  
+The inference rule can also be used as upside down.  Pictorially,
+\hskip -7cm
+\begin{prooftree}
+	\AxiomC{$c \LTCmeet a \fCenter b$}
+    \UnaryInfC{$c \fCenter a \RLimp b$}
+ \DisplayProof \hskip 96pt   
+    \AxiomC{$c \fCenter a \RLimp b$}
+    \UnaryInfC{$c \LTCmeet a \fCenter b$}
+\end{prooftree}
+\end{enumerate}
+\end{definition}
+
+
+
+
+
+\begin{table}[t]
+\[
+\begin{array}{c}
+c \LTCmeet (a \LTCjoin b) = (c \LTCmeet a) \LTCjoin (c \LTCmeet b) \\
+a \LTCjoin \lneg{a} = \LTCtop \\
+a \LTCmeet \lneg{a} = \LTCbot \\
+\end{array}
+\]
+\caption{axiomatic identities for boolean algebras}
+\label{BAaxiomSystem}
+\noindent\makebox[\linewidth]{\rule{\textwidth}{0.4pt}}
+\end{table}
+
+\section{Commutative residuated lattices}
+
+\begin{definition}[commutative residuated lattice]
+A commutative {\em  residuated lattice} is a octaple 
+$(L,\vee,\bot,\wedge,\top,\RLimp,\RLotimes,\RLone)$.
+The following conditions hold:
+\begin{enumerate}
+\item {\em lattice}: 
+$(L,\vee,\bot,\wedge,\top)$ is a lattice,
+\item {\em commutative monoid}: 
+$(L,\RLotimes,\RLone)$ is a commutative monoid,
+\item  {\em residual law}: for each pair of elements $(a,b)$, 
+there exists an element $a \RLimp b$  such that residual law holds:
+\hskip -7cm
+\begin{prooftree}
+	\AxiomC{$c \RLotimes a \fCenter b$}
+    \UnaryInfC{$c \fCenter a \RLimp b$}
+ \DisplayProof \hskip 96pt   
+    \AxiomC{$c \fCenter a \RLimp b$}
+    \UnaryInfC{$c \RLotimes a \fCenter b$}
+\end{prooftree}
+
+\end{enumerate}
+\end{definition}
+
+
+
+\def\fCenter{\LLvdash}
+
+\begin{table}[ht]
+\begin{center}
+\begin{prooftree}
+\AxiomC{$A \fCenter A$}  
+\RightLabel{(Weakening)} \UnaryInfC  {$A \fCenter B,A$}
+\RightLabel{(R $\LLimp$)} \UnaryInfC  {$ \fCenter A \LLimp B,A$}
+\AxiomC{A \fCenter A}
+\RightLabel{(L $\LLimp$)}
+\BinaryInfC{$ (A \LLimp B) \LLimp A \fCenter A,A$}
+\RightLabel{(Contraction)}  \UnaryInfC{$ (A \LLimp B) \LLimp A \fCenter A$}
+\RightLabel{(R $\LLimp$)}  \UnaryInfC{$  \fCenter ((A \LLimp B) \LLimp A) \LLimp A$}
+\end{prooftree}
+\end{center}
+\caption{pierce's law}
+\end{table}
+
+
+\def\fCenter{\leq}
+
+\begin{table}[ht]
+\begin{center}
+\begin{prooftree}
+\AxiomC{$a \fCenter a$}  
+\UnaryInfC  {$a \fCenter b \LTCjoin a$}
+\UnaryInfC  {$ \LTCtop \fCenter (a \RLimp b) \LTCjoin a$}
+\AxiomC{$(a \RLimp b) \RLimp a  \fCenter (a \RLimp b) \RLimp a$}
+\UnaryInfC{$(a \RLimp b) \LTCmeet ((a \RLimp b) \RLimp a)  \fCenter   a$}
+\BinaryInfC{$ (a \RLimp b) \RLimp a \fCenter a \LTCjoin a$}
+\UnaryInfC{$ (a \RLimp b) \RLimp a \fCenter a$}
+\UnaryInfC{$  \LTCtop \fCenter ((a \RLimp b) \RLimp a) \RLimp a$}
+\end{prooftree}
+\end{center}
+\caption{proof of pierce's law in boolean algebra}
+\end{table}
+
+\subsection{A monad on a poset is precisely a closure operator}
+
+\begin{fact}
+From any poset $P$  we can define a category.
+\end{fact}
+
+\begin{proof}
+We take as objects the elements of $P$, 
+and when $x \leq y$, 
+we have a unique arrow $x \rightarrow y$. 
+\end{proof}
+
+The arrow is usually left unnamed, since there's at most one for any pair of objects. 
+
+\begin{enumerate}
+    \item Reflexivity ensures the existence of $\mbox{id}_x$, 
+as the unique arrow $x \leq x$.
+    \item Transitivity ensures composites,
+where  $(x \rightarrow y) ; (y \rightarrow z)$ 
+is the unique arrow guaranteed by $x \leq z$. 
+\end{enumerate}
+
+\begin{fact}
+Any diagram which we can draw in a poset commutes, since any parallel arrows are equal.
+\end{fact}
+
+\begin{proposition}
+A monad on a poset is precisely a closure operator. 
+\end{proposition}
+
+\begin{proof}
+\begin{enumerate}
+    \item $T : C \rightarrow C$ is a functor: we must have $x \leq y$ implies $\bar{x} \leq \bar{y}$ . That is,  $T$ is monotone.
+    \item There is a natural transformations 
+$\eta : \mbox{1}_{\sf{C}} \Rightarrow T$.
+Such a natural transformation is given by an arrow $x \rightarrow T(x)$  for all $x \in C$. 
+That is, for all  $x \in C$ we have $x \leq T(x)$.
+ That is, $T$ is extensive.
+    \item 
+There is a natural transformation and $\mu : T ; T \Rightarrow T$. As in the last point, this becomes for all $x \in C$  we have $T(T(x))$. 
+That is, $T$ is idempotent.
+\end{enumerate}
+\end{proof}
+
+\subsection{A T-algebra for a monad $T$  is a closed element}
+
+\begin{definition}
+An algebra for a monad $T$ on $C$ is an object $x \in C$ 
+together with an arrow $T(x) \rightarrow x$  satisfying diagrams (that we again don't care about). 
+\end{definition}
+
+That is, in a poset, a T-algebra for a monad $T$ is an element 
+ with $T(x) \leq x$  — a closed element.
+ 
+\subsection{Prorders and Posets}
+
+ \begin{definition} [Preorders]
+A category $P$ is a {\em preorder} if, given objects $p$ and $q$, there is at most one arrow $p \rightarrow q$. 
+\end{definition}
+
+\begin{definition} [Skeletal category] 
+A category is called {\em skeletal} when any two ismorphic objects are identical. 
+\end{definition}
+
+In any preorder $P$, 
+define a binary relation $\leq$ on the objects of $P$, 
+with $p \leq q$ if and only if there is an arrow $p \rightarrow q$ in $P$.
+
+\begin{enumerate}
+    \item  This binary relation is reflexive, 
+    because there is an identy arrow $p \rightarrow p$. 
+    \item It is also transitive, 
+    because arrows $f: p \rightarrow q$ and $g: q \rightarrow r$ can be composed $ (f ; g) : p \rightarrow r$. 
+\end{enumerate}
+
+Conversely, any set $P$ with a reflexive, transitive binary relation $\leq$ determines a preorder,
+in which the arrows $p \rightarrow q$ are exactly those ordered pairs 
+$\langle p,q \rangle$ for which $p \leq q$. 
+\begin{enumerate}
+    \item Since the relation is  transitive, there is a unique way of composing these arrows.
+    \item Since it is reflexive, there are the necessary indety arrows. 
+\end{enumerate}
+
+\begin{definition} [Posets]
+A preorder  $P$ is a poset if it has the added axiom that $p \leq q$ and $q \leq p$ imply $p = q$.
+\end{definition}
+
+In other words, a skeletal preorder is a poset. 
+
+
+ 
+%\bibliography{BiB/LinearLogicPfenning,BiB/AttackTree,BiB/algebra,BiB/PaulTaylor} 
+\end{document}

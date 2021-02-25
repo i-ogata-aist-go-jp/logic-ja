@@ -1,0 +1,394 @@
+\newcommand{\LKsystem}{{\sf\bf LK}}
+\newcommand{\MALLsystem}{{\sf\bf MALL}}
+\newcommand{\HMALLsystem}{{\sf H-{\bf MALL}}}
+
+%
+% LinearLogic LL
+%
+\newcommand{\entails}{\Rightarrow}
+\newcommand{\LLwith}{\with}
+\newcommand{\LLoplus}{\oplus}
+\newcommand{\LLotimes}{\otimes}
+\newcommand{\LLimp}{\multimap}
+
+\newcommand{\LLatimesb}{A \otimes B}
+\newcommand{\LLatimesc}{A \otimes C}
+\newcommand{\LLbplusc}{B \oplus C}
+\newcommand{\LLdistForm}{( \LLatimesb) \oplus (\LLatimesc)}
+\newcommand{\LLsrcForm}{A \otimes (\LLbplusc)}
+\newcommand{\lnegA}{\lneg{A}}
+\newcommand{\dlnegA}{\dlneg{A}}
+\newcommand{\lnegB}{\lneg{B}}
+\newcommand{\dlnegB}{\dlneg{B}}
+\newcommand{\LLtop}{\top}
+\newcommand{\LLbot}{\bot}
+\newcommand{\LLone}{\ONE}
+\newcommand{\LLzero}{\ZERO}
+%
+\newcommand{\LLvdash}{\mbox{ \Large$\Rightarrow$ }}
+\newcommand{\LLargument}{{(\mbox{\textendash})}}
+\newcommand{\lnegArg}{\lneg{\LLargument}}
+\newcommand{\dlnegArg}{\dlneg{\LLargument}}
+%
+\newcommand{\lneg}[1]{{{#1}^{\bot}}}
+\newcommand{\lnegP}[1]{{(#1)^{\bot}}}
+\newcommand{\dlneg}[1]{{{#1}^{\bot\bot}}}
+\newcommand{\dlnegP}[1]{{(#1)^{\bot\bot}}}
+\newcommand{\lnega}{\lneg{a}}
+\newcommand{\lnegb}{\lneg{b}}
+\newcommand{\dlnega}{\dlneg{a}}
+\newcommand{\dlnegb}{\dlneg{b}}
+%
+\newcommand{\LLleftAdjoint}{ a { \LLotimes } {\LLargument}}
+\newcommand{\LLrightAdjoint}{ a { \LLimp } {\LLargument}}
+%
+\newcommand{\LLatimesbS}{a \otimes b}
+\newcommand{\LLatimescS}{a \otimes c}
+\newcommand{\LLbpluscS}{b \oplus c}
+\newcommand{\LLdistFormS}{( \LLatimesbS) \LLoplus (\LLatimescS)}
+\newcommand{\LLsrcFormS}{a \otimes (\LLbpluscS)}
+%
+\newcommand{\LLaxiom}[1]{\AxiomC{$$}\UnaryInfC{$#1 \fCenter #1$}}
+
+%%
+\newcommand{\LLotimesNP}[2]{{#1}\LLotimes{#2}}
+\newcommand{\LLotimesP}[2]{(\LLotimesNP{#1}{#2})}
+\newcommand{\LLotimesTrinary}[3]{\LLotimesNP{#1}{\LLotimesP {#2}{#3}}}
+\newcommand{\LLimpNP}[2]{{#1}\LLimp{#2}}
+\newcommand{\LLimpP}[2]{(\LLimpNP{#1}{#2})}
+\newcommand{\LLimpTrinary}[3]{\LLimpNP{#1} {\LLimpP {#2}{#3}}}
+\newcommand{\LLimpTrinaryP}[3]{(\LLimpTrinary{#1}{#2}{#3})}
+\newcommand{\LLwithNP}[2]{{#1}\LLwith{#2}}
+\newcommand{\LLwithP}[2]{(\LLwithNP{#1}{#2})}
+\newcommand{\LLwithTrinary}[3]{\LLwithNP{#1}{\withP {#2}{#3}}}
+\newcommand{\LLoplusNP}[2]{{#1}\LLoplus{#2}}
+\newcommand{\LLoplusP}[2]{(\LLoplusNP{#1}{#2})}
+\newcommand{\LLoplusTrinary}[3]{\LLoplusNP{#1}{\LLoplusP {#2}{#3}}}
+
+%% Gentzen'ssequent calculus
+
+\newcommand{\LLaxioms}{
+\begin{center}
+\begin{prooftree}
+\RightLabel{Ax}
+\AxiomC{} 
+\UnaryInfC {$A \fCenter A$}
+	\DisplayProof \hskip 72pt
+\RightLabel{DNE}
+\AxiomC{}
+\UnaryInfC {$\dlneg{A} \fCenter A$}
+\end{prooftree}
+\end{center}
+}
+
+\newcommand{\LLcutRule}{
+\begin{center}
+\begin{prooftree}
+\RightLabel{Cut}
+\AxiomC {$\Gamma_0 \fCenter A$}
+\AxiomC {$\Gamma_1,A \fCenter D $}
+\BinaryInfC  {$\Gamma_0,\Gamma_1 \fCenter D$}
+\end{prooftree}
+\end{center}
+}
+
+\newcommand{\LLaddUnitRule}{
+\begin{center}
+\begin{prooftree}
+\RightLabel{L$\LLzero$}
+\AxiomC{}
+\UnaryInfC{${\Gamma,\LLzero} \fCenter {D}$}
+	\DisplayProof \hskip 72pt
+\RightLabel{R$\LLtop$}
+\AxiomC{}
+\UnaryInfC{${\Gamma} \fCenter {\LLtop}$}
+\end{prooftree}
+\end{center}
+}
+
+\newcommand{\LLwithRule}{
+\begin{center}
+\begin{prooftree}
+\RightLabel{L$\with$$(i = 1,2)$}
+\AxiomC {$\Gamma,A_i \fCenter D$}
+\UnaryInfC  {$\Gamma,A_1 \with A_2 \fCenter D$}
+	\DisplayProof \hskip 32pt
+\RightLabel{R$\with$}
+\AxiomC {$\Gamma \fCenter A$}
+\AxiomC {$\Gamma \fCenter B$}
+\BinaryInfC  {$\Gamma \fCenter A \with B$}
+\end{prooftree}
+\end{center}
+}
+
+\newcommand{\LLoplusRule}{
+\begin{center}
+\begin{prooftree}
+\RightLabel{L$\oplus$}
+\AxiomC {$\Gamma,A \fCenter D$}
+\AxiomC {$\Gamma,B \fCenter D$}
+\BinaryInfC  {$\Gamma,A\oplus B \fCenter D$}
+	\DisplayProof \hskip 32pt
+\RightLabel{R$\oplus$$(i = 1,2)$}
+\AxiomC {$\Gamma \fCenter A_i$}
+\UnaryInfC  {$\Gamma \fCenter A_1 \oplus A_2$}
+%
+\end{prooftree}
+\end{center}
+}
+
+\newcommand{\LLmultUnitRule}{
+\begin{center}
+\begin{prooftree}
+\RightLabel{L$\LLone$}
+\AxiomC{$\Gamma\fCenter D$}
+\UnaryInfC{$\Gamma,\LLone\fCenter D$}
+	\DisplayProof \hskip 72pt
+\RightLabel{R$\LLone$}
+\AxiomC{}
+\UnaryInfC{$ \fCenter \LLone$}
+\end{prooftree}
+\end{center}
+}
+
+\newcommand{\LLotimesRule}{
+\begin{center}
+\begin{prooftree}
+\RightLabel{L$\LLotimes$}
+\AxiomC {$\Gamma,A,B \fCenter D$}
+\UnaryInfC  {$\Gamma,A \LLotimes B \fCenter D$}
+	\DisplayProof \hskip 64pt
+\RightLabel{R$\LLotimes$}
+\AxiomC {$\Gamma_0 \fCenter A$}
+\AxiomC {$\Gamma_1 \fCenter B$}
+\BinaryInfC  {$\Gamma_0,\Gamma_1 \fCenter A\LLotimes B$}
+\end{prooftree}
+\end{center}
+}
+
+\newcommand{\LLimpRule} {
+\begin{center}
+\begin{prooftree}
+\RightLabel{L$\LLimp$}
+\AxiomC {$\Gamma_0 \fCenter A$}
+\AxiomC {$\Gamma_1,B \fCenter D$}
+\BinaryInfC  {$\Gamma_0,\Gamma_1,A\LLimp B \fCenter D$}
+	\DisplayProof \hskip 32pt
+\RightLabel{R$\LLimp$}
+\AxiomC {$\Gamma,A \fCenter B$}
+\UnaryInfC  {$\Gamma \fCenter A\LLimp B$}
+\end{prooftree}
+\end{center}
+}
+
+\newcommand{\LLnegRule}{
+\begin{center}
+\begin{prooftree}
+\RightLabel{L$\lneg{\QTargument}$}
+\AxiomC {$\Gamma \fCenter A$}
+\UnaryInfC  {$\Gamma,\lneg{A} \fCenter \LLbot$}
+	\DisplayProof \hskip 96pt
+\RightLabel{R$\lneg{\QTargument}$}
+\AxiomC {$\Gamma,A \fCenter \LLbot$}
+\UnaryInfC  {$\Gamma \fCenter \lneg{A}$}
+\end{prooftree}
+\end{center}
+}
+
+%%
+\newcommand{\LLdRule}{
+\AxiomC{$\Gamma,A \fCenter D$}
+\RightLabel{D}
+\UnaryInfC{$\Gamma, \oc A \fCenter D$}}
+
+\newcommand{\LLpRule}{
+\AxiomC{$\oc \Gamma,\fCenter D$}
+\RightLabel{P}
+\UnaryInfC{$\oc \Gamma, \oc C \fCenter \oc D$}}
+
+\newcommand{\LLwRule}{
+\AxiomC{$\Gamma \fCenter D$}
+\RightLabel{W}
+\UnaryInfC{$\Gamma, \oc C \fCenter D$}}
+
+\newcommand{\LLcRule}{
+\AxiomC{$\Gamma,\oc C,\oc C \fCenter D$}
+\RightLabel{C}
+\UnaryInfC{$\Gamma, \oc C \fCenter D$}}
+
+
+%% Classical Logic 
+
+\newcommand{\CLwRule}{
+\AxiomC{$\Gamma \fCenter D$}
+\RightLabel{Weakening}
+\UnaryInfC{$\Gamma, C \fCenter D$}}
+
+\newcommand{\CLcRule}{
+\AxiomC{$\Gamma,C,C \fCenter D$}
+\RightLabel{Contraction}
+\UnaryInfC{$\Gamma, C \fCenter D$}}
+
+\newcommand{\CLstructuralRule}{
+\begin{center}
+\begin{prooftree}
+\CLwRule 
+	\DisplayProof \hskip 72pt
+\CLcRule
+\end{prooftree}
+\end{center}
+}
+
+\newcommand{\CLaddUnitRule}{
+\begin{center}
+\begin{prooftree}
+\RightLabel{L$\LLzero$}
+\AxiomC{}
+\UnaryInfC{${\LLzero} \fCenter {D}$}
+	\DisplayProof \hskip 72pt
+\RightLabel{R$\LLtop$}
+\AxiomC{}
+\UnaryInfC{$ \fCenter \LLtop $}
+\end{prooftree}
+\end{center}
+}
+
+
+%% HBT Hilbert
+\newcommand{\HBTaxiomK}[2] {\LLimpTrinary{#1}{#2}{#1}}
+
+\newcommand{\HBTaxiomW}[2]
+{\LLimpNP
+	{\LLimpTrinaryP{#1}{#1}{#2}}
+	{\LLimpP{#1}{#2}}}
+	
+\newcommand{\HBTaxiomS}[3]
+{\LLimpTrinary
+	{\LLimpTrinaryP{#1}{#2}{#3}}
+	{\LLimpP{#1}{#2}}
+	{\LLimpP{#1}{#3}}}
+
+\newcommand{\HBTaxiomI}[1]{\LLimpNP{#1}{#1}}
+
+\newcommand{\HBTaxiomA}[3]
+{\LLimpNP
+	{\LLwithP
+		{\LLimpP{#1}{#2}}
+		{\LLimpP{#1}{#3}}}
+	{\LLimpP
+		{#1}
+		{\LLwithP{#2}{#3}}}}
+        
+\newcommand{\HBTaxiomB}[3]
+{\LLimpTrinary
+	{\LLimpP{#1}{#2}}
+	{\LLimpP{#2}{#3}}
+	{\LLimpP{#1}{#3}}}
+    
+\newcommand{\HBTaxiomC}[3]
+{\LLimpNP
+	{\LLimpTrinaryP{#1}{#2}{#3}}
+	{\LLimpTrinaryP{#2}{#1}{#3}}}
+    
+\newcommand{\HBTaxiomRotimes}[2]
+{\LLimpTrinary
+	{#1}
+	{#2}
+	{\LLotimesP{#1}{#2}}}
+\newcommand{\HBTaxiomLotimes}[3]
+{\LLimpNP
+	{\LLimpTrinaryP{#1}{#2}{#3}}
+	{\LLimpP
+    	{\LLotimesP{#1}{#2}}
+        {#3}}}
+\newcommand{\HBTaxiomRone}{\LLone}
+\newcommand{\HBTaxiomLone}[1]
+{\LLimpNP
+	{#1}
+	{\LLimpP{\LLone}{#1}}}
+ 
+\newcommand{\HBTaxiomLwith}[1]
+{
+{\LLimpNP
+	{\LLwithP{{#1}_1}{{#1}_2}}
+	{{#1}_1}}
+\hskip 6pt , \hskip 6pt 
+{\LLimpNP
+	{\LLwithP{{#1}_1}{{#1}_2}}
+	{{#1}_2}}}
+
+\newcommand{\HBTaxiomRoplus}[1]
+{
+{\LLimpNP
+	{{#1}_1}
+	{\LLoplusP{{#1}_1}{{#1}_2}}}
+\hskip 6pt , \hskip 6pt 
+{\LLimpNP
+	{{#1}_2}
+	{\LLoplusP{{#1}_1}{{#1}_2}}}}
+    
+\newcommand{\HBTaxiomLoplus}[3]
+{\LLimpNP
+	{\LLwithP
+		{\LLimpP{#1}{#3}}
+		{\LLimpP{#2}{#3}}}
+	{\LLimpP
+		{\LLoplusP{#1}{#2}}
+		{#3}}}
+    
+\newcommand{\HBTaxiomTop}[1]{\LLimpNP{#1}{\LLtop}}
+\newcommand{\HBTaxiomZero}[1]{\LLimpNP{\LLzero}{#1}}
+
+\newcommand{\HBTaxiomDNE}[1]{\LLimpNP{\dlneg{#1}}{#1}}
+
+%%
+% HBT combinators
+\newcommand{\HBTcombI}{\mbox{\boldmath{I}}}
+\newcommand{\HBTcombB}{\mbox{\boldmath{B}}}
+\newcommand{\HBTcombC}{\mbox{\boldmath{C}}}
+\newcommand{\HBTcombK}{\mbox{\boldmath{K}}}
+\newcommand{\HBTcombW}{\mbox{\boldmath{W}}}
+%
+\newcommand{\HBTcombBtype}[3]{\HBTcombB_{{#1},{#2},{#3}}}
+\newcommand{\HBTcombCtype}[3]{\HBTcombC_{{#1},{#2},{#3}}}
+\newcommand{\HBTcombKtype}[2]{\HBTcombK_{{#1},{#2}}}
+\newcommand{\HBTcombWtype}[2]{\HBTcombW_{{#1},{#2}}}
+%
+\newcommand{\HBTtermI}[1]{
+	\HBTterm
+		{\HBTcombI_{#1}}
+		{\LLimpNP{#1}{#1}}}
+\newcommand{\HBTtermB}[3]{
+	\HBTterm
+		{\HBTcombB_{{#1},{#2},{#3}}}
+		{\LLimpNP
+			{\LLimpP{#1}{#2}}
+			{\LLimpP
+				{\LLimpP{#2}{#3}}
+				{\LLimpP{#1}{#3}}}}}
+\newcommand{\HBTtermC}[3]{
+	\HBTterm
+		{\HBTcombC_{{#1},{#2},{#3}}}
+		{\LLimpNP
+			{\LLimpTrinaryP{#1}{#2}{#3}}
+			{\LLimpTrinaryP{#2}{#1}{#3}}}}
+%
+% HBT  Curry-Howard term calculus
+%
+\newcommand{\HBTterm}[2]{ {#1}  :  \hskip 6pt  \vdash \hskip 6pt  {#2} }
+%
+\newcommand{\HBTpair}[2]{\langle{#1},{#2} \rangle}
+\newcommand{\HBTtermMP}[4] {
+	\RightLabel{Modus Ponens}  
+		\AxiomC {$\HBTterm{#4}{#1}$}   
+		\AxiomC {$\HBTterm{#3}{\LLimpNP{#1}{#2}}$}
+	\BinaryInfC {$\HBTterm {{#3}{#4}} {#2}$}
+}
+\newcommand{\HBTtermConjunction}[4] {
+	\RightLabel{Conjunction}  
+		\AxiomC {$\HBTterm{#3}{#1}$} 
+		\AxiomC {$\HBTterm{#4}{#2}$}     
+	\BinaryInfC {$\HBTterm {\HBTpair{#3}{#4}} {\withNP{#1}{#2}}$}
+}
+
+

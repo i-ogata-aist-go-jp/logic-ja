@@ -1,0 +1,257 @@
+\theoremstyle{definition}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{fact}[theorem]{fact}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{remark}[theorem]{Remark}
+
+%% newcommands
+\newcommand{\defeq}{\mathrel{\mathop:}=}
+\newcommand{\eqdef}{\mathrel{\mathop=}:}
+\newcommand{\ONE}{\mbox{\boldmath{1}}}
+\newcommand{\ZERO}{\mbox{\boldmath{0}}}
+
+% multisets
+\makeatletter
+\@ifpackageloaded{stix}{%
+}{%
+  \DeclareFontEncoding{LS2}{}{\noaccents@}
+  \DeclareFontSubstitution{LS2}{stix}{m}{n}
+  \DeclareSymbolFont{stix@largesymbols}{LS2}{stixex}{m}{n}
+  \SetSymbolFont{stix@largesymbols}{bold}{LS2}{stixex}{b}{n}
+  \DeclareMathDelimiter{\lBrace}{\mathopen} {stix@largesymbols}{"E8}%
+                                            {stix@largesymbols}{"0E}
+  \DeclareMathDelimiter{\rBrace}{\mathclose}{stix@largesymbols}{"E9}%
+                                            {stix@largesymbols}{"0F}
+}
+\makeatother
+
+\newcommand{\multiset}[1]{\lBrace {#1} \rBrace}
+
+% Residuated Lattices  RL
+
+\newcommand{\RLone}{\ONE}
+\newcommand{\RLzero}{\ZERO}
+\newcommand{\RLotimes}{\otimes}
+\newcommand{\RLimp}{\multimap}
+\newcommand{\RLoplus}{\oplus}
+\newcommand{\RLcdot}{\cdotbin}
+
+\newcommand{\RLstandard}{(L,\LTCjoin,\LTCbot,\LTCmeet,\LTCtop,\RLotimes,\RLone,\RLimp)}
+
+\newcommand{\RLotimesab}{a \RLotimes b}
+\newcommand{\RLotimesba}{b \RLotimes a}
+\newcommand{\RLotimesac}{a \RLotimes c}
+\newcommand{\RLotimesca}{c \RLotimes a}
+\newcommand{\RLotimescb}{c \RLotimes b}
+\newcommand{\RLotimesbc}{b \RLotimes c}
+\newcommand{\RLotimesbd}{b \RLotimes d}
+
+\newcommand{\RLimpac}{a \multimap c}
+\newcommand{\RLimpab}{a \multimap b}
+\newcommand{\RLimpbc}{b \multimap c}
+\newcommand{\RLimpad}{a \multimap d}
+\newcommand{\RLimpca}{c \multimap a}
+\newcommand{\RLimpcb}{c \multimap b}
+
+\newcommand{\RLojcacb}{(\RLotimesca) \LTCjoin (\RLotimescb)}
+\newcommand{\RLimcacb}{(\RLimpca) \LTCmeet (\RLimpcb)}
+
+\newcommand{\RLneg}[1]{{{#1}^{\bot}}}
+\newcommand{\RLnegP}[1]{{{(#1)}^{\bot}}}
+\newcommand{\dRLneg}[1]{{{#1}^{\bot\bot}}}
+\newcommand{\dRLnegP}[1]{{(#1)^{\bot\bot}}}
+\newcommand{\RLnegA}{\RLneg{a}}
+\newcommand{\dRLnegA}{\dRLneg{a}}
+\newcommand{\RLnegB}{\RLneg{b}}
+\newcommand{\dRLnegB}{\dRLneg{b}}
+
+\newcommand{\RLbigwedge}{\bigvee ( c \RLotimes A) }
+\newcommand{\RLbigimp}{\bigwedge ( c \RLimp A)}
+
+% DeMorgan
+
+\newcommand{\DeMorganMeet}{\RLnegP{\RLnegA \LTCmeet \RLnegB}}
+\newcommand{\DeMorganJoin}{\RLnegP{\RLnegA \LTCjoin \RLnegB}}
+\newcommand{\DeMorganJoinD}{\dRLnegP{\RLnegA \LTCjoin \RLnegB}}
+
+% Lattices LTC
+\newcommand{\LTCjoin}{\vee}
+\newcommand{\LTCbot}{\bot}
+\newcommand{\LTCmeet}{\wedge}
+\newcommand{\LTCtop}{\top}
+\newcommand{\LTCimp}{\to}
+\newcommand{\LTCeq}{\leftrightarrow}
+\newcommand{\LTCneg}{\neg}
+\newcommand{\LTCdneg}{\neg\neg}
+\newcommand{\LTCotimes}{\otimes}
+\newcommand{\LTCtrue}{\top}
+\newcommand{\LTCfalse}{\bot}
+
+\newcommand{\LTClattice}{(L,\LTCjoin,\LTCbot,\LTCmeet,\LTCtop)}
+\newcommand{\LTCheyting}{(L,\LTCjoin,\LTCbot,\LTCmeet,\LTCtop,\LTCimp)}
+%
+\newcommand{\LTCaxiom}[1]{\AxiomC{$ {#1} \fCenter {#1}$}}
+\newcommand{\LTCjoinab}{a \LTCjoin b}
+\newcommand{\LTCjoinba}{b \LTCjoin a}
+\newcommand{\LTCjoincd}{c \LTCjoin d}
+\newcommand{\LTCjoinac}{a \LTCjoin c}
+\newcommand{\LTCjoinbc}{b \LTCjoin c}
+\newcommand{\LTCjoinbd}{b \LTCjoin d}
+\newcommand{\LTCmeetab}{a \LTCmeet b}
+\newcommand{\LTCmeetba}{b \LTCmeet a}
+\newcommand{\LTCmeetac}{a \LTCmeet c}
+\newcommand{\LTCmeetbc}{b \LTCmeet c}
+\newcommand{\LTCmeetbd}{b \LTCmeet d}
+\newcommand{\LTCmeetca}{c \LTCmeet a}
+\newcommand{\LTCmeetcb}{c \LTCmeet b}
+\newcommand{\LTCjoincacb}{(\LTCmeetca)\LTCjoin(\LTCmeetcb)}
+\newcommand{\LTCmeetaB}{a \LTCmeet B}
+%
+\newcommand{\LTCimpaa}{a \LTCimp a}
+\newcommand{\LTCimpab}{a \LTCimp b}
+\newcommand{\LTCimpac}{a \LTCimp c}
+\newcommand{\LTCimpca}{c \LTCimp a}
+\newcommand{\LTCimpcb}{c \LTCimp b}
+\newcommand{\LTCimpcacb}{(\LTCimpca) \LTCmeet (\LTCimpcb)}
+\newcommand{\LTCimpbc}{b \LTCimp c}
+\newcommand{\LTCimpad}{a \LTCimp d}
+\newcommand{\LTCimpaB}{a \LTCimp B}
+%
+
+\newcommand{\LTCnega}{\LTCneg{a}}
+\newcommand{\LTCnegb}{\LTCneg{b}}
+
+\newcommand{\LTCdnega}{\LTCneg\LTCneg a}
+\newcommand{\LTCdnegb}{\LTCneg\LTCneg b}
+
+\newcommand{\LTCvdash}{\Rightarrow}
+
+\newcommand{\LTCnegP}[1]{\LTCneg ({#1})}
+\newcommand{\dLTCnegP}[1]{\LTCneg\LTCneg ({#1})}
+
+%
+% Lattices and Closures
+\newcommand{\cdotbin}{\mathbin{\cdot}}
+\newcommand{\closureLTCjoin}{\mathbin{\closure{\LTCjoin}}}
+\newcommand{\closureRLotimes}{\mathbin{\closure{\RLotimes}}}
+%
+\newcommand{\closure}[1]{\overline{#1}}
+\newcommand{\closureOP}{\closure{\phantom{i}}}
+\newcommand{\dclosure}[1]{\closure{\closure{#1}}}
+\newcommand{\closureX}{\closure{x}}
+\newcommand{\closureY}{\closure{y}}
+\newcommand{\dclosureX}{\dclosure{x}}
+\newcommand{\dclosureY}{\dclosure{y}}
+
+\newcommand{\closureA}{\closure{a}}
+\newcommand{\closureB}{\closure{b}}
+\newcommand{\closureC}{\closure{c}}
+\newcommand{\dclosureA}{\dclosure{a}}
+\newcommand{\dclosureB}{\dclosure{b}}
+%
+\newcommand{\principalFilter}[1]{\mathop{\uparrow}(#1)}
+\newcommand{\PfilterX}{\principalFilter{x}}
+\newcommand{\PfilterY}{\principalFilter{y}}
+\newcommand{\CcapPfilterX}{C\cap\!\principalFilter{x}}
+\newcommand{\CcapPfilterY}{C\cap\!\principalFilter{y}}
+\newcommand{\CcapPfilterCX}{C\cap\!\principalFilter{\closureX}}
+%
+\newcommand{\kernel}[1]{\oc{#1}}
+\newcommand{\kernelOP}{\kernel{\phantom{i}}}
+\newcommand{\dkernel}[1]{\kernel{\kernel{#1}}}
+\newcommand{\kernelX}{\kernel{x}}
+\newcommand{\kernelY}{\kernel{y}}
+\newcommand{\dkernelX}{\dkernel{x}}
+\newcommand{\dkernelY}{\dkernel{y}}
+% \newcommand{\LLunit}{\mbox{\boldmath{1}}}
+% \newcommand{\LLzero}{\bot}
+% \newcommand{\LLtrue}{\top}
+% \newcommand{\LLfalse}{\mbox{\boldmath{0}}}
+%%
+%% Quantail QT
+%
+\newcommand{\QTargument}{{(\mbox{\textendash})}}
+\newcommand{\QTargumentT}{{(\mbox{\textendash},\mbox{\textendash})}}
+\newcommand{\QTemptyset}{\varnothing}
+
+\newcommand{\QTotimes}{\otimes}
+\newcommand{\QToplus}{\oplus}
+\newcommand{\QTmultimap}{\multimap}
+\newcommand{\QTlub}{\bigvee_ {i \in I}}
+\newcommand{\QTglb}{\bigwedge_ {i \in I}}
+\newcommand{\QTleftAdjoint}{ a { \QTotimes } {\QTargument}}
+\newcommand{\QTrightAdjoint}{ a { \QTmultimap } {\QTargument}}
+
+\newcommand{\QTinterpret}[1]{{#1}^{Q}}
+\newcommand{\QTinterpretP}[1]{(#1)^{Q}}
+
+% new command for base Quantales
+\newcommand{\QTidentity}{\varepsilon}
+\newcommand{\QTbottom}{\varphi}
+
+% \newcommand{\QTidentity}{\QTunit}
+\newcommand{\QTunit}{\QTinterpret{\ONE}}
+\newcommand{\QTzero}{\QTinterpret{\bot}}
+\newcommand{\QTtrue}{\QTinterpret{\top}}
+\newcommand{\QTfalse}{\QTinterpret{\ZERO}}
+%
+% Phase Space
+%
+\newcommand{\PSargument}{{(\mbox{\textendash})}}
+\newcommand{\PScdot}{\cdot}
+
+\newcommand{\PSunit}{\interpret{\ONE}}
+\newcommand{\PSzero}{\interpret{\bot}}
+\newcommand{\PStrue}{\interpret{\top}}
+\newcommand{\PSfalse}{\interpret{\ZERO}}
+
+\newcommand{\interpret}[1]{{#1}^{M}}
+\newcommand{\interpretP}[1]{(#1)^{M}}
+
+\newcommand{\PSpowerset}[1]{\mathcal{P}(#1)}
+\newcommand{\PSidentity}{\varepsilon}
+\newcommand{\PSemptyset}{\varnothing}
+\newcommand{\PSzz}{{\mathbb{Z}}}
+\newcommand{\PSnn}{{\mathbb{N}}}
+\newcommand{\PSsetofintegers}{\PSzz}
+\newcommand{\PSsetofpint}{\PSzz^{+}}
+\newcommand{\PSsetofnn}{\PSnn}
+\newcommand{\PSsetofnnint}{\PSzz^{*}}
+\newcommand{\PSsetofnint}{\PSzz^{-}}
+
+\newcommand{\PSexpTrivial}{\set{\PSidentity}}
+\newcommand{\PSexpStandard}{{\mbox{\boldmath{I}}}^{M}}
+\newcommand{\PSexpFull}{{\mbox{\boldmath{J}}}^{M}}
+\newcommand{\PSexpStructure}{{\mbox{\boldmath{K}}}^{M}}
+
+\newcommand{\PSlub}{\bigoplus_ {i \in I} X_i}
+\newcommand{\PSglb}{\bigwith_ {i \in I} X_i}
+\newcommand{\PSsrc}{\bigoplus_ {i \in I}  (Y \otimes X_i)}
+\newcommand{\PSpre}{\bigoplus_ {i \in I}  (Y \cdot X_i)}
+\newcommand{\PSdist}{Y \otimes(\PSlub)}
+
+\newcommand{\PSintA}{\interpret{\alpha}}
+\newcommand{\PSintB}{\interpret{\beta}}
+\newcommand{\PSintC}{\interpret{\gamma}}
+
+
+\newcommand{\PSEtrue}{\mbox{True}}
+\newcommand{\PSEfalse}{\mbox{False}}
+
+\newcommand{\valuation}[1]{\llbracket {#1} \rrbracket}
+\newcommand{\valuationC}[1]{\llbracket {#1} \rrbracket^{\mathcal{C}}}
+\newcommand{\valuationP}[1]{\llbracket {#1} \rrbracket^{\mathcal{P}}}
+\newcommand{\valuationE}[1]{\llbracket {#1} \rrbracket^{\mathcal{E}}}
+\newcommand{\valuationG}[1]{\llbracket {#1} \rrbracket^{\mathcal{G}}}
+% \newcommand{\valuationX}[1]{\llbracket {#1} \rrbracket^{\mathcal{C}}}
+
+%% Attack Tree
+\newcommand{\ATrootbox}[1]{\doublebox{#1}}
+\newcommand{\ATnonleafbox}[1]{\fbox{#1}}
+\newcommand{\ATleafbox}[1]{\ovalbox{#1}}
+%%
+
